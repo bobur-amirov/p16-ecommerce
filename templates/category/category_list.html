@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Category List</title>
+</head>
+<body>
+
+{% for category in categories %}
+    <a href="{% url 'sub_category_list' category.slug %}">{{ category.name }}</a>
+    <br>
+{#    {% for sub_c in category.children.all %}#}
+{#        {{ sub_c.name }}#}
+{#        <br>#}
+{#    {% endfor %}#}
+{#    <hr>#}
+{% endfor %}
+
+</body>
+</html>

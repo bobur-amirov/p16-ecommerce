@@ -12,3 +12,6 @@ class Category(MPTTModel, TimeStampedModel):
 
     class Meta:
         ordering = ['order']
+
+    def __str__(self):
+        return self.name
