@@ -2,7 +2,7 @@ from django.db import models
 
 from base.models import TimeStampedModel
 from category.models import Category
-from account.models import Seller
+from account.models import User
 from product.managers import ProductManager
 
 
@@ -22,7 +22,7 @@ class Size(TimeStampedModel):
         return self.name
 
 class Product(TimeStampedModel):
-    seller = models.ForeignKey(Seller, on_delete=models.CASCADE, related_name='seller')
+    seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name='seller')
     title = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(max_length=100, unique=True)
     description = models.TextField()

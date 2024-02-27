@@ -10,6 +10,8 @@ class User(AbstractUser):
     )
     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=3)
     phone_number = models.CharField(max_length=13)
+    address = models.ForeignKey("Address", on_delete=models.CASCADE, related_name='users', null=True)
+    company = models.ForeignKey("Company", on_delete=models.CASCADE, related_name='users', null=True)
 
     def __str__(self):
         return self.username
@@ -37,19 +39,3 @@ class Address(models.Model):
     def __str__(self):
         return self.text[:10]
 
-
-class Customer(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='customer', null=True)
-    address = models.ForeignKey(Address, on_delete=models.CASCADE, related_name='customer', null=True)
-
-    def __str__(self):
-        return self.user.username
-
-
-class Seller(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='seller', null=True)
-    address = models.ForeignKey(Address, on_delete=models.CASCADE, related_name='seller', null=True)
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='seller', null=True)
-
-    def __str__(self):
-        return self.user.username
