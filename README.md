@@ -20,7 +20,7 @@ Welcome to our E-Commerce Website, built using Django! This README file serves a
 
 1. **Clone the Repository**: 
    ```
-   git clone <repository_url>
+   git clone https://github.com/bobur-amirov/p16-ecommerce.git
    ```
 
 2. **Install Dependencies**:
