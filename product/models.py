@@ -25,11 +25,11 @@ class Size(TimeStampedModel):
 class Product(TimeStampedModel):
     seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name='seller')
     title = models.CharField(max_length=100, unique=True)
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='products')
     slug = models.SlugField(max_length=100, unique=True)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.IntegerField(default=0)
-    category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='products')
     color = models.ManyToManyField(Color, blank=True)
     size = models.ManyToManyField(Size, blank=True)
 

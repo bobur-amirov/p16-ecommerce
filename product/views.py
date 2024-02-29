@@ -1,6 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView
-
+from django.views.generic import ListView, DetailView
 
 from .models import Product
 
@@ -13,7 +12,14 @@ class HomeView(ListView):
     def get_queryset(self):
         return Product.objects.all()[:12]
 
+
 class ProductListView(ListView):
     model = Product
     template_name = 'product/product_list.html'
     context_object_name = 'products'
+
+
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'product/product_detail.html'
+    context_object_name = 'product'
