@@ -9,7 +9,7 @@ from .views import (
 app_name = 'order'
 
 urlpatterns = [
-    path('order-summary', order_summary, name='order-summary'),
+    path('order-summary', order_summary, name='order_summary'),
     path('add-to-cart/<pk>/', add_to_cart, name='add-to-cart'),
     path('remove-from-cart/<pk>/', remove_from_cart, name='remove-from-cart'),
     path('reduce-quantity-item/<pk>/', reduce_quantity_item, name='reduce-quantity-item')
