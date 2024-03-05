@@ -20,7 +20,6 @@ def order_summary(request):
     order = Order.objects.filter(customer=request.user, ordered=False).annotate(
         order_total_price=Sum('orderitem__total_price')
     ).first()
-    print(order.__dict__)
     context = {
         'order': order
     }
@@ -36,6 +35,7 @@ def add_to_cart(request, pk):
     order_item, created = OrderItem.objects.get_or_create(
         product=product,
         customer=request.user,
+        ordered=False
     )
     order_qs = Order.objects.filter(customer=request.user, ordered=False)
 
@@ -70,23 +70,18 @@ def remove_from_cart(request, pk):
 
 @login_required
 def reduce_quantity_item(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    order_qs = Order.objects.filter(
+    order_item = get_object_or_404(OrderItem, pk=pk)
+    order = Order.objects.filter(
         customer=request.user,
         ordered=False
-    )
-    if order_qs.exists():
-        order = order_qs[0]
-        if order.orderitem.filter(product__pk=product.pk).exists():
-            order_item = OrderItem.objects.filter(
-                product=product,
-                customer=request.user,
-                ordered=False
-            )[0]
+    ).first()
+    if order:
+        if order_item:
             if order_item.quantity > 1:
                 order_item.quantity -= 1
                 order_item.save()
             else:
+                order.orderitem.remove(order_item)
                 order_item.delete()
             messages.info(request, "Item quantity was updated")
             return redirect("order:order_summary")
