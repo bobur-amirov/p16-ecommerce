@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     # third
     'mptt',
     'debug_toolbar',
+    'rest_framework',
 
     # custom
     'base.apps.BaseConfig',

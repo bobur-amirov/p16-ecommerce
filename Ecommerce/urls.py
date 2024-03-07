@@ -24,3 +24,11 @@ urlpatterns = [
     path('order/', include('order.urls')),
     path("__debug__/", include("debug_toolbar.urls")),
 ]
+
+
+urlpatterns_api = [
+    path('api/v1/', include('category.api.urls')),
+    path('api/v1/', include('product.api.urls')),
+]
+
+urlpatterns += urlpatterns_api
