@@ -29,8 +29,8 @@ class Product(TimeStampedModel):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.IntegerField(default=0)
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='products')
-    color = models.ManyToManyField(Color, blank=True)
-    size = models.ManyToManyField(Size, blank=True)
+    color = models.ForeignKey(Color, on_delete=models.PROTECT, null=True, blank=True)
+    size = models.ForeignKey(Size, on_delete=models.PROTECT, null=True, blank=True)
 
     custom = ProductManager()
     objects = models.Manager()

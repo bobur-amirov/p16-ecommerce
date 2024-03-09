@@ -18,8 +18,8 @@ class SizeSerializer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     category = CategorySerializer(read_only=True)
-    color = ColorSerializer(many=True)
-    size = SizeSerializer(many=True)
+    color = ColorSerializer()
+    size = SizeSerializer()
     class Meta:
         model = Product
         fields = '__all__'

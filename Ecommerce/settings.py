@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'mptt',
     'debug_toolbar',
     'rest_framework',
+    'django_filters',
 
     # custom
     'base.apps.BaseConfig',
