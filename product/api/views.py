@@ -1,3 +1,7 @@
+from django.core.cache import cache
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+
 from rest_framework import generics
 from django_filters import rest_framework as filters
 
@@ -7,10 +11,18 @@ from product.models import Product
 
 class ProductListView(generics.ListAPIView):
     serializer_class = ProductSerializer
-    queryset = Product.objects.select_related('category').prefetch_related('color', 'size').all()
     filter_backends = [filters.DjangoFilterBackend]
     filterset_fields = ['color', 'size']
 
+    def get_queryset(self):
+        products = cache.get('products')
+        if products is None:
+            print('cache not working ---')
+            products = Product.objects.select_related('category').prefetch_related('color', 'size').all()
+            cache.set('products', products)
+        return products
+
+@method_decorator(cache_page(60*5), name='dispatch')
 class ProductDetailView(generics.RetrieveAPIView):
     serializer_class = ProductSerializer
     queryset = Product.objects.all()

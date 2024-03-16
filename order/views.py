@@ -11,6 +11,7 @@ from .models import (
     OrderItem
 )
 
+from .tasks import send_email
 from product.models import Product
 
 
@@ -37,6 +38,7 @@ def add_to_cart(request, pk):
         customer=request.user,
         ordered=False
     )
+
     order_qs = Order.objects.filter(customer=request.user, ordered=False)
 
     if order_qs.exists():
@@ -54,6 +56,7 @@ def add_to_cart(request, pk):
     else:
         order = Order.objects.create(customer=request.user)
         order.orderitem.add(order_item)
+        send_email.delay(order.id)
         messages.info(request, "Item added to your cart")
         return redirect("order:order_summary")
 

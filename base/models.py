@@ -6,3 +6,7 @@ class TimeStampedModel(models.Model):
 
     class Meta:
         abstract = True
+
+
+class TestModel(TimeStampedModel):
+    text = models.CharField(max_length=100)

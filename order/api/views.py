@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from order.api.permissions import OrderPermission, OrderItemAuthorPermission
 from order.api.serializers import OrderSerializer
 from order.models import Order, OrderItem
+from order.tasks import send_email
 from product.models import Product
 
 
@@ -24,6 +25,8 @@ class AddOrderView(APIView):
         if product.quantity <= 0:
             return Response({'message': "Product qolmadi!"}, status=status.HTTP_200_OK)
         order, created = Order.objects.get_or_create(customer=request.user, ordered=False)
+        if created:
+            send_email.delay(order.id)
         orderitem, item_created = OrderItem.objects.get_or_create(product=product, customer=request.user, ordered=False)
         if not item_created:
             orderitem.quantity += 1
