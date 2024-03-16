@@ -10,6 +10,7 @@ services:
     depends_on:
       - db
       - redis
+    restart: unless-stopped
 
   db:
     image: postgres:15-alpine
@@ -20,15 +21,17 @@ services:
       - POSTGRES_PASSWORD=Qwerty123
     volumes:
       - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
 
   redis:
     image: redis:alpine
     container_name: redis
+    restart: unless-stopped
 
   celery:
     build: .
     command: celery -A Ecommerce worker -l INFO
-
+    restart: unless-stopped
     depends_on:
       - web
       - redis
@@ -41,6 +44,7 @@ services:
     command: "celery -A Ecommerce flower --address=0.0.0.0"
     depends_on:
       - celery
+    restart: unless-stopped
 
 volumes:
   pgdata:
