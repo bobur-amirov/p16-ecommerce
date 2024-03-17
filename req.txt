@@ -16,8 +16,10 @@ django-mptt==0.16.0
 django-redis==5.4.0
 djangorestframework==3.14.0
 flower==2.0.1
+gunicorn==21.2.0
 humanize==4.9.0
 kombu==5.3.5
+packaging==24.0
 pillow==10.2.0
 prometheus_client==0.20.0
 prompt-toolkit==3.0.43
