@@ -39,8 +39,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - '5555:5555'
+    expose:
+      - 5555
     command: "celery -A Ecommerce flower --address=0.0.0.0"
     depends_on:
       - celery
