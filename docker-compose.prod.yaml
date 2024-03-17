@@ -7,8 +7,6 @@ services:
     command: gunicorn Ecommerce.wsgi:application --bind 0.0.0.0:8000
     expose:
         - 8000
-    volumes:
-      - static_folder:/app/static
     depends_on:
       - db
       - redis
@@ -52,11 +50,8 @@ services:
     build: ./nginx
     ports:
       - 80:80
-    volumes:
-      - static_folder:/app/static
     depends_on:
       - web
 
 volumes:
   pgdata:
-  static_folder:
