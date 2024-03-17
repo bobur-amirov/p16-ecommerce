@@ -7,6 +7,8 @@ services:
     command: gunicorn Ecommerce.wsgi:application --bind 0.0.0.0:8000
     expose:
         - 8000
+    volumes:
+      - static_folder:/app/static
     depends_on:
       - db
       - redis
@@ -39,8 +41,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    expose:
-      - 5555
+    ports:
+      - '5555:5555'
     command: "celery -A Ecommerce flower --address=0.0.0.0"
     depends_on:
       - celery
@@ -50,8 +52,11 @@ services:
     build: ./nginx
     ports:
       - 80:80
+    volumes:
+      - static_folder:/app/static
     depends_on:
       - web
 
 volumes:
   pgdata:
+  static_folder:
