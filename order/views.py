@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Sum
+from django.db.models import Sum, F
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, View
 from django.utils import timezone
@@ -45,7 +45,7 @@ def add_to_cart(request, pk):
         order = order_qs[0]
 
         if order.orderitem.filter(product__pk=product.pk).exists():
-            order_item.quantity += 1
+            order_item.quantity = F('quantity') + 1
             order_item.save()
             messages.info(request, "Added quantity Item")
             return redirect("order:order_summary")

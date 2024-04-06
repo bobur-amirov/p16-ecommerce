@@ -35,7 +35,7 @@ class Product(TimeStampedModel):
     custom = ProductManager()
     objects = models.Manager()
     def __str__(self):
-        return self.title
+        return self.title + " " + str(self.pk)
 
 
 class Images(TimeStampedModel):
